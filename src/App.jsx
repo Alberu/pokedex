@@ -22,7 +22,7 @@ import {
 import { Button } from "./components/ui/button";
 import CustomSidebarTrigger from "./components/CustomSidebarTrigger";
 import StatColourBar from "./components/StatColourBar";
-import { Card, CardContent, CardTitle } from "./components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 
 function App() {
   // need a way to load all of the information
@@ -32,7 +32,7 @@ function App() {
 
   const [searchString, setSearchString] = useState("");
 
-  const { name, height, abilities, stats, types, moves, sprites } =
+  const { name, height, weight, abilities, stats, types, moves, sprites } =
     pokemonInfo || {}; // just in case there is no data
   // THIS NEEDS TO BE CLEANED UP
   const usableSprites = Object.keys(sprites || {}).filter((val) => {
@@ -70,7 +70,9 @@ function App() {
 
     // check if selected pokemon already in cache and that the pokemon ins't empty
     if (selectedPokemon in cache && cache[selectedPokemon]) {
-      console.log(`Loaded pokemon (${selectedPokemon}) from cache`);
+      console.log(
+        `Loaded pokemon (${selectedPokemon}) from cache (${cache[selectedPokemon]?.name})`
+      );
       setPokemonInfo(cache[selectedPokemon]);
       return; // make sure to exit
     }
@@ -86,13 +88,15 @@ function App() {
         const result = await fetch(url);
         const pokemonData = await result.json();
         setPokemonInfo(pokemonData);
-        cache[selectedPokemon] = pokemonInfo;
+        cache[selectedPokemon] = pokemonData; // why can't I put pokemnonInfo here if I have updated the value
 
         localStorage.setItem("pokedex", JSON.stringify(cache));
       } catch (err) {
         console.log(err);
       } finally {
-        console.log("Succesfully fetched pokemon");
+        console.log(
+          `Succesfully fetched pokemon (${selectedPokemon}, ${cache[selectedPokemon]?.name})`
+        );
         setLoading(false);
       }
     }
@@ -133,6 +137,7 @@ function App() {
                         <SidebarMenuButton
                           isActive={pokemonIndex === selectedPokemon}
                           onClick={() => {
+                            console.log(truePokemonIndex);
                             setSelectedPokemon(truePokemonIndex);
                           }}
                         >
@@ -153,10 +158,45 @@ function App() {
           {/* {if (loading){
             return (<p>hi</p>)
           }} // why can't I put this here */}
+          <div className="flex justify-center items-center space-x-4">
+            <div>
+              <img className="h-80 w-80" src={sprites?.front_default} />
+            </div>
+            <div>
+              <h3>
+                #{getFullPokedexNumber(selectedPokemon)} {name}
+              </h3>
+              <div>
+                {types.map((type, typeIndex) => {
+                  return (
+                    <div key={typeIndex}>
+                      <p>some card with {type?.type?.name}</p>
+                    </div>
+                  );
+                })}
+              </div>
+              <p>Height: {height}</p>
+              <p>Weight: {weight}</p>
+            </div>
+          </div>
+          <div className="items-center space-x-4">
+                    {stats.map((statObj, statIndex) => {
+                      const { stat, base_stat } = statObj;
+                      return (
+                        <div key={statIndex}>
+                          {/* <p>{stat?.name.replaceAll('-',' ')}: {base_stat}</p> */}
+                          <StatColourBar value={base_stat} statType={stat?.name} />
+                          {/* <p>add a loading bar of how good this is</p> */}
+                        </div>
+                      );
+                    })}
+          </div>
           <Card>
-            <CardTitle>
-              #{getFullPokedexNumber(selectedPokemon)} {name}
-            </CardTitle>
+            <CardHeader>
+              <CardTitle>
+                #{getFullPokedexNumber(selectedPokemon)} {name}
+              </CardTitle>
+            </CardHeader>
             <CardContent></CardContent>
             <div>
               {types.map((type, typeIndex) => {
@@ -180,7 +220,9 @@ function App() {
             </div>
           </Card>
           <Card>
-            <CardTitle>Stats</CardTitle>
+            <CardHeader>
+              <CardTitle>Stats</CardTitle>
+            </CardHeader>
             <CardContent>
               <div>
                 {stats.map((statObj, statIndex) => {
@@ -197,7 +239,9 @@ function App() {
             </CardContent>
           </Card>
           <Card>
-            <CardTitle>Moves</CardTitle>
+            <CardHeader>
+              <CardTitle>Moves</CardTitle>
+            </CardHeader>
             <CardContent>
               <div>
                 {moves.map((move, moveIndex) => {
