@@ -163,7 +163,7 @@ function App() {
               <img className="h-80 w-80" src={sprites?.front_default} />
             </div>
             <div>
-              <h3>
+              <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
                 #{getFullPokedexNumber(selectedPokemon)} {name}
               </h3>
               <div>
@@ -180,16 +180,16 @@ function App() {
             </div>
           </div>
           <div className="items-center space-x-4">
-                    {stats.map((statObj, statIndex) => {
-                      const { stat, base_stat } = statObj;
-                      return (
-                        <div key={statIndex}>
-                          {/* <p>{stat?.name.replaceAll('-',' ')}: {base_stat}</p> */}
-                          <StatColourBar value={base_stat} statType={stat?.name} />
-                          {/* <p>add a loading bar of how good this is</p> */}
-                        </div>
-                      );
-                    })}
+            {stats.map((statObj, statIndex) => {
+              const { stat, base_stat } = statObj;
+              return (
+                <div key={statIndex}>
+                  {/* <p>{stat?.name.replaceAll('-',' ')}: {base_stat}</p> */}
+                  <StatColourBar value={base_stat} statType={stat?.name} />
+                  {/* <p>add a loading bar of how good this is</p> */}
+                </div>
+              );
+            })}
           </div>
           <Card>
             <CardHeader>
