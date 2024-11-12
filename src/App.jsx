@@ -22,6 +22,7 @@ import {
 import { Button } from "./components/ui/button";
 import CustomSidebarTrigger from "./components/CustomSidebarTrigger";
 import StatColourBar from "./components/StatColourBar";
+import { Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 
 function App() {
@@ -68,12 +69,15 @@ function App() {
       cache = JSON.parse(localStorage.getItem("pokedex"));
     }
 
+    setLoading(true);
     // check if selected pokemon already in cache and that the pokemon ins't empty
     if (selectedPokemon in cache && cache[selectedPokemon]) {
       console.log(
         `Loaded pokemon (${selectedPokemon}) from cache (${cache[selectedPokemon]?.name})`
       );
       setPokemonInfo(cache[selectedPokemon]);
+      setLoading(false)
+      // setTimeout(() => setLoading(false), 2000);
       return; // make sure to exit
     }
 
@@ -81,7 +85,6 @@ function App() {
     async function fetchPokemonData() {
       try {
         // get info
-        setLoading(true);
         const url = `https://pokeapi.co/api/v2/pokemon/${getPokedexNumber(
           selectedPokemon
         )}`;
@@ -98,19 +101,20 @@ function App() {
           `Succesfully fetched pokemon (${selectedPokemon}, ${cache[selectedPokemon]?.name})`
         );
         setLoading(false);
+        // setTimeout(() => setLoading(false), 2000)
       }
     }
 
     fetchPokemonData();
   }, [selectedPokemon]);
 
-  if (loading || !pokemonInfo) {
-    return (
-      <div>
-        <h4>Loading...</h4>
-      </div>
-    );
-  }
+  // if (loading || !pokemonInfo) {
+  //   return (
+  //     <div>
+  //       <h4>Loading...</h4>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -158,102 +162,78 @@ function App() {
           {/* {if (loading){
             return (<p>hi</p>)
           }} // why can't I put this here */}
-          <div className="flex justify-center items-center space-x-4">
-            <div>
-              <img className="h-80 w-80" src={sprites?.front_default} />
+          {loading && (
+            <div className="flex justify-center item gap-5 p-10 text-2xl">
+              <Loader2 className="h-7 w-7 animate-spin" />
+              <span>Loading pokemon info...</span>
             </div>
-            <div>
-              <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
-                #{getFullPokedexNumber(selectedPokemon)} {name}
-              </h3>
-              <div>
-                {types.map((type, typeIndex) => {
-                  return (
-                    <div key={typeIndex}>
-                      <p>some card with {type?.type?.name}</p>
-                    </div>
-                  );
-                })}
-              </div>
-              <p>Height: {height}</p>
-              <p>Weight: {weight}</p>
-            </div>
-          </div>
-          <div className="items-center space-x-4">
-            {stats.map((statObj, statIndex) => {
-              const { stat, base_stat } = statObj;
-              return (
-                <div key={statIndex}>
-                  {/* <p>{stat?.name.replaceAll('-',' ')}: {base_stat}</p> */}
-                  <StatColourBar value={base_stat} statType={stat?.name} />
-                  {/* <p>add a loading bar of how good this is</p> */}
+          )}
+          {!loading && (
+            <>
+              <div className="flex justify-center items-center space-x-4">
+                <div>
+                  <img className="h-52 w-52" src={sprites?.front_default} />
                 </div>
-              );
-            })}
-          </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                #{getFullPokedexNumber(selectedPokemon)} {name}
-              </CardTitle>
-            </CardHeader>
-            <CardContent></CardContent>
-            <div>
-              {types.map((type, typeIndex) => {
-                return (
-                  <div key={typeIndex}>
-                    <p>some card with {type?.type?.name}</p>
+                <div>
+                  <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
+                    #{getFullPokedexNumber(selectedPokemon)} {name}
+                  </h3>
+                  <div>
+                    {types.map((type, typeIndex) => {
+                      return (
+                        <div key={typeIndex}>
+                          <p>some card with {type?.type?.name}</p>
+                        </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
-            </div>
-            <div>
-              {usableSprites.map((spriteKey, spriteIndex) => {
-                return (
-                  <img
-                    key={spriteIndex}
-                    src={sprites[spriteKey]}
-                    alt={`${name}-img-${spriteKey}`}
-                  />
-                );
-              })}
-            </div>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Stats</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div>
+                  <p>Height: {height}</p>
+                  <p>Weight: {weight}</p>
+                </div>
+              </div>
+              <div className="items-center space-x-4">
                 {stats.map((statObj, statIndex) => {
                   const { stat, base_stat } = statObj;
                   return (
                     <div key={statIndex}>
-                      {/* <p>{stat?.name.replaceAll('-',' ')}: {base_stat}</p> */}
                       <StatColourBar value={base_stat} statType={stat?.name} />
-                      {/* <p>add a loading bar of how good this is</p> */}
                     </div>
                   );
                 })}
               </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Moves</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div>
-                {moves.map((move, moveIndex) => {
-                  return (
-                    <Button key={moveIndex}>
-                      {move?.move?.name.replaceAll("-", " ")}
-                    </Button>
-                  );
-                })}
+              <hr></hr>
+              <div className="p-10 gap-10">
+                <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
+                  Moves
+                </h3>
+                <div>
+                  {moves.map((move, moveIndex) => {
+                    return (
+                      <Button key={moveIndex}>
+                        {move?.move?.name.replaceAll("-", " ")}
+                      </Button>
+                    );
+                  })}
+                </div>
               </div>
-            </CardContent>
-          </Card>
+              <div>
+                <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
+                  Sprites
+                </h3>
+                <div className="flex items-center">
+                  {usableSprites.map((spriteKey, spriteIndex) => {
+                    return (
+                      <img
+                        key={spriteIndex}
+                        src={sprites[spriteKey]}
+                        alt={`${name}-img-${spriteKey}`}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
         </SidebarInset>
       </SidebarProvider>
     </>
