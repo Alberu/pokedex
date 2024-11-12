@@ -108,14 +108,6 @@ function App() {
     fetchPokemonData();
   }, [selectedPokemon]);
 
-  // if (loading || !pokemonInfo) {
-  //   return (
-  //     <div>
-  //       <h4>Loading...</h4>
-  //     </div>
-  //   );
-  // }
-
   return (
     <>
       <SidebarProvider>
@@ -169,7 +161,7 @@ function App() {
             </div>
           )}
           {!loading && (
-            <>
+            <div className="gap-5">
               <div className="flex justify-center items-center space-x-4">
                 <div>
                   <img className="h-52 w-52" src={sprites?.front_default} />
@@ -202,14 +194,14 @@ function App() {
                 })}
               </div>
               <hr></hr>
-              <div className="p-10 gap-10">
+              <div className="p-10 gap-32">
                 <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
                   Moves
                 </h3>
                 <div>
                   {moves.map((move, moveIndex) => {
                     return (
-                      <Button key={moveIndex}>
+                      <Button className='m-1' key={moveIndex}>
                         {move?.move?.name.replaceAll("-", " ")}
                       </Button>
                     );
@@ -220,7 +212,7 @@ function App() {
                 <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
                   Sprites
                 </h3>
-                <div className="flex items-center">
+                <div className="flex items-center overflow-auto">
                   {usableSprites.map((spriteKey, spriteIndex) => {
                     return (
                       <img
@@ -232,7 +224,7 @@ function App() {
                   })}
                 </div>
               </div>
-            </>
+            </div>
           )}
         </SidebarInset>
       </SidebarProvider>
