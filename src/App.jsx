@@ -76,7 +76,7 @@ function App() {
         `Loaded pokemon (${selectedPokemon}) from cache (${cache[selectedPokemon]?.name})`
       );
       setPokemonInfo(cache[selectedPokemon]);
-      setLoading(false)
+      setLoading(false);
       // setTimeout(() => setLoading(false), 2000);
       return; // make sure to exit
     }
@@ -160,9 +160,11 @@ function App() {
               <span>Loading pokemon info...</span>
             </div>
           )}
-          {(!loading && pokemonInfo) && (
-            <div className="gap-5">
-              <div className="flex justify-center items-center space-x-4">
+          {!loading && pokemonInfo && (
+            <div>
+              <hr />
+
+              <div className="p-5 space-y-3 flex justify-center items-center space-x-4">
                 <div>
                   <img className="h-52 w-52" src={sprites?.front_default} />
                 </div>
@@ -183,32 +185,47 @@ function App() {
                   <p>Weight: {weight}</p>
                 </div>
               </div>
-              <div className="items-center space-x-4">
+
+              <hr />
+
+              <div className="p-5 space-y-3">
+                <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
+                  Base stats
+                </h3>
                 {stats.map((statObj, statIndex) => {
                   const { stat, base_stat } = statObj;
                   return (
-                    <div key={statIndex}>
-                      <StatColourBar value={base_stat} statType={stat?.name} />
-                    </div>
+                    // <div key={statIndex}>
+                    <StatColourBar
+                      key={statIndex}
+                      value={base_stat}
+                      statType={stat?.name}
+                    />
+                    // </div>
                   );
                 })}
               </div>
-              <hr></hr>
-              <div className="p-10 gap-32">
+
+              <hr />
+
+              <div className="p-5 space-y-3">
                 <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
                   Moves
                 </h3>
                 <div>
                   {moves.map((move, moveIndex) => {
                     return (
-                      <Button className='m-1' key={moveIndex}>
+                      <Button className="m-1" variant={'outline'} key={moveIndex}>
                         {move?.move?.name.replaceAll("-", " ")}
                       </Button>
                     );
                   })}
                 </div>
               </div>
-              <div>
+
+              <hr />
+
+              <div className="p-5 space-y-3">
                 <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
                   Sprites
                 </h3>
