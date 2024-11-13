@@ -154,13 +154,13 @@ function App() {
           {/* {if (loading){
             return (<p>hi</p>)
           }} // why can't I put this here */}
-          {loading && (
+          {(loading || !pokemonInfo) && (
             <div className="flex justify-center item gap-5 p-10 text-2xl">
               <Loader2 className="h-7 w-7 animate-spin" />
               <span>Loading pokemon info...</span>
             </div>
           )}
-          {!loading && (
+          {(!loading && pokemonInfo) && (
             <div className="gap-5">
               <div className="flex justify-center items-center space-x-4">
                 <div>
