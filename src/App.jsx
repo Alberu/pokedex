@@ -4,6 +4,7 @@ import {
   first151Pokemon,
   getFullPokedexNumber,
   getPokedexNumber,
+  pokemonTypeColors,
 } from "./utils";
 import {
   Sidebar,
@@ -168,16 +169,15 @@ function App() {
                 <div>
                   <img className="h-52 w-52" src={sprites?.front_default} />
                 </div>
-                <div>
+                <div className="space-y-1">
                   <h3 className="text-2xl text-center font-semibold leading-none tracking-tight">
                     #{getFullPokedexNumber(selectedPokemon)} {name}
                   </h3>
                   <div>
                     {types.map((type, typeIndex) => {
+                      console.log(`bg-${type?.type?.name}TypeBackground text-${type?.type?.name}TypeText m-1`)
                       return (
-                        <div key={typeIndex}>
-                          <p>some card with {type?.type?.name}</p>
-                        </div>
+                          <Button key={typeIndex} className={`bg-${type?.type?.name}-background text-${type?.type?.name}-color m-1`} variant='outline'>{type?.type?.name}</Button>
                       );
                     })}
                   </div>
