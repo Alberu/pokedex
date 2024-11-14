@@ -175,7 +175,6 @@ function App() {
                   </h3>
                   <div>
                     {types.map((type, typeIndex) => {
-                      console.log(`bg-${type?.type?.name}TypeBackground text-${type?.type?.name}TypeText m-1`)
                       return (
                           <Button key={typeIndex} className={`bg-${type?.type?.name}-background text-${type?.type?.name}-color m-1`} variant='outline'>{type?.type?.name}</Button>
                       );
