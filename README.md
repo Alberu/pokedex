@@ -97,7 +97,6 @@ build the app
 npm run build
 ```
 5. Deploy the app
-deploy
 ```bash
 npm run deploy
 ```
