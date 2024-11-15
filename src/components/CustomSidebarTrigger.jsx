@@ -12,8 +12,8 @@ export default function CustomSidebarTrigger() {
       onClick={toggleSidebar}
     >
       {/* <Tablet className="h-20 w-20" /> */}
-      <h1>Pokedex</h1>
-      <span className="sr-only">Toggle Pokedex</span>
+      <h1>Pokédex</h1>
+      <span className="sr-only">Toggle Pokédex</span>
     </Button>
   );
 }
