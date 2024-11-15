@@ -65,5 +65,8 @@ The **Pokédex React App** is a sleek and interactive web application that allow
    http://localhost:5173
    ```
 
+### Credits
+
+This project was based on from the [React.JS Full Course](https://smoljames.com/roadmap)
 
 
