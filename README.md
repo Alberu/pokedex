@@ -67,6 +67,6 @@ The **Pokédex React App** is a sleek and interactive web application that allow
 
 ### Credits
 
-This project was based on from the [React.JS Full Course](https://smoljames.com/roadmap)
+This project was based on the [React.JS Full Course by James McArthur](https://smoljames.com/roadmap)
 
 
