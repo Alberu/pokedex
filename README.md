@@ -102,7 +102,7 @@ deploy
 npm run deploy
 ```
 
-### Credits
+## Credits
 
 This project was based on the [React.JS Full Course by James McArthur](https://smoljames.com/roadmap)
 
