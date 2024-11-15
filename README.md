@@ -66,6 +66,42 @@ The **Pokédex React App** is a sleek and interactive web application that allow
    http://localhost:5173
    ```
 
+### Deploying
+
+1. Modify `vite.config.js` setting the `base` option to your repository name so paths resolve correctly:
+```javascript
+import path from "path"
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  base: '/pokedex/',
+  // any extra bits
+})
+```
+2. Install `gh-pages` as a development dependency in your project:
+```bash
+npm install gh-pages --save-dev
+```
+3. Add a deploy script to your `package.json`
+```json
+"scripts": {
+  "build": "vite build",
+  "deploy": "gh-pages -d dist"
+}
+```
+4. Build the app
+build the app
+```bash
+npm run build
+```
+5. Deploy the app
+deploy
+```bash
+npm run deploy
+```
+
 ### Credits
 
 This project was based on the [React.JS Full Course by James McArthur](https://smoljames.com/roadmap)
