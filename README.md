@@ -1,4 +1,4 @@
-# Pokédex React App
+# [Pokédex React App](https://alberu.github.io/pokedex/)
 
 ![Pokedex Screenshot](pokedex-app.png)
 
@@ -14,6 +14,7 @@ The **Pokédex React App** is a sleek and interactive web application that allow
     - Name
     - Type(s)
     - Base stats
+    - Moves
     - Sprites
   
 - 📄 **Navigation side bar:**
@@ -65,5 +66,8 @@ The **Pokédex React App** is a sleek and interactive web application that allow
    http://localhost:5173
    ```
 
+### Credits
+
+This project was based on the [React.JS Full Course by James McArthur](https://smoljames.com/roadmap)
 
 
