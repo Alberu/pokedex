@@ -21,7 +21,7 @@ The **Pokédex React App** is a sleek and interactive web application that allow
   - Browse through the entire fire red/leaf green Pokémon collection with efficient data fetching.
   
 - 🎨 **Responsive Design:**
-  - Optimized for desktop, tablet, and mobile devices.
+  - Optimised for desktop, tablet, and mobile devices.
 
 ## 🛠️ Built With
 
